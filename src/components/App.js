@@ -10,6 +10,8 @@ import ForgotPassword from "./login/ForgotPassword"
 import UpdateProfile from "./login/UpdateProfile"
 import Navb from "./layout/Navbar"
 import TrainSearch from "./TrainSearch"
+import History from "./login/History"
+
 
 
 function App() {
@@ -19,7 +21,8 @@ function App() {
             <Switch>    
                <PrivateRoute exact path="/" component={TrainSearch}  />  
               <PrivateRoute exact path="/navb" component={Navb}  />
-              <PrivateRoute exact path="/dashboard" component={Dashboard}  />   
+              <PrivateRoute exact path="/dashboard" component={Dashboard}  /> 
+              <PrivateRoute exact path="/history" component={History}  />   
               <PrivateRoute exact path="/update-profile" component={UpdateProfile}  /> 
              <Route path="/signup" component={Signup} />
              <Route path="/login" component={Login} />            
