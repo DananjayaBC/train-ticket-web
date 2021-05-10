@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Consumer } from '../context'
-
+import moment from 'moment'
 
 
 class Search extends Component {
@@ -15,8 +15,8 @@ class Search extends Component {
     findTrain = (dispatch, e, item) => {
         e.preventDefault();
 
-        axios.get(`http://api.lankagate.gov.lk:8280/railway/1.0/train/searchTrain?startStationID=${this.state.selectValue1}&endStationID=${this.state.selectValue2}&startTime=00:00:00&endTime=23:59:00&lang=en&searchDate=2021-03-11`
-            , { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer 0a654e91-26a0-3442-b19f-ccc2205ab276' } })
+        axios.get(`http://api.lankagate.gov.lk:8280/railway/1.0/train/searchTrain?startStationID=${this.state.selectValue1}&endStationID=${this.state.selectValue2}&startTime=00:00:00&endTime=23:59:00&lang=en&searchDate=${moment().format('yyyy-MM-DD')}`
+            , { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer 3831df83-dddf-343d-a689-4acf20a5fb1c' } })
             .then(res => {
                 dispatch({
                     type: 'SEARCH_TRAINS',
@@ -31,7 +31,7 @@ class Search extends Component {
             .catch(err => console.log(err));
 
         axios.get(`http://api.lankagate.gov.lk:8280/railway/1.0/ticket/getPrice?startStationID=${this.state.selectValue1}&endStationID=${this.state.selectValue2}&lang=en`
-            , { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer 0a654e91-26a0-3442-b19f-ccc2205ab276' } })
+            , { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer 3831df83-dddf-343d-a689-4acf20a5fb1c' } })
             .then(res => {
                 dispatch({
                     type: 'SEARCH_PRICES',

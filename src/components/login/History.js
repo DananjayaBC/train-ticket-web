@@ -4,6 +4,7 @@ import firebase from '../../firebase';
 import { useAuth } from "../../contexts/AuthContext"
 import 'firebase/firestore';
 import Spinner from '../layout/Spinner'
+import moment from 'moment'
 
 function SnapshotFirebaseAdvanced() {
   const { currentUser } = useAuth();
@@ -12,7 +13,7 @@ function SnapshotFirebaseAdvanced() {
   const [loading, setLoading] = useState(false);
 
 
-  const ref = firebase.firestore().collection('userData').doc(currentUserId).collection('payments');
+  const ref = firebase.firestore().collection('userData').doc(currentUserId).collection(moment().format('YYYY-MM-DD')).orderBy('date', "desc");
 
   function getPayments() {
     setLoading(true);
@@ -49,13 +50,12 @@ function SnapshotFirebaseAdvanced() {
               <div className="card-body bg-light" key={payment.id}>
                 <h5>{payment.description}</h5>
                 <p className="card-text" >
-                  <strong><i className="fas fa-time"></i>Payment ID - </strong>: {payment.PaymentId}
-                  <br />
+
                   <strong><i className="fas fa-play"></i> {payment.date} </strong>
                   <br />
                   <strong><i className="fas fa-time"></i>Class - {payment.class} </strong>
                   <br />
-                  <strong><i className="fas fa-play"></i> Rs.{payment.price} </strong>
+                  <strong><i className="fas fa-play"></i> Rs.{payment.price}.00 </strong>
                 </p>
               </div>
             </div>

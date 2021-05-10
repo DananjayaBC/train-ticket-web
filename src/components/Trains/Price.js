@@ -1,16 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, } from 'react'
 import { Button } from 'react-bootstrap'
 import StripeCheckout from "react-stripe-checkout"
-import Train from './Train';
+import firebase from '../../firebase';
+import moment from 'moment'
+import { useAuth } from "../../contexts/AuthContext"
+
 
 const Price = (props) => {
+
+    const { currentUser } = useAuth();
+    const currentUserId = currentUser ? currentUser.uid : null;
+    const authorId = currentUser ? currentUser.uid : null;
+    const currentUserEmail = currentUser ? currentUser.email : null;
     const { priceList } = props;
 
 
+
     const [product, setProduct] = useState({
-        name: " {trainsList.startStationName}",
+        name: "Alawwa - Ambepussa",
         price: priceList && priceList.priceLKR,
-        productBy: "facebook",
+        productBy: "RAILWAY SL",
 
     });
     const makePayment = token => {
@@ -30,11 +39,42 @@ const Price = (props) => {
             console.log("RESPONSE ", response)
             const { status } = response;
             console.log("STATUS", status)
+
+            firebase.firestore().collection("userData").doc(currentUserId).collection(moment().format('YYYY-MM-DD')).add({
+                PaymentId: "pay_GjCX3I1UZ23KeZ",
+                PaymentType: 'paid',
+                class: priceList && priceList.className,
+                date: moment().format('YYYY-MM-DD – HH:mm A'),
+                description: "Alawwa - Ambepussa",
+                endStation: 'Ambepussa',
+                name: currentUserEmail,
+                price: parseInt(priceList && priceList.priceLKR),
+                startStation: 'ALAWWA'
+            })
+
+            firebase.firestore().collection("admin")
+                .doc(moment().format('YYYY-MM-DD'))
+                .collection('tickets')
+                .add({
+                    PaymentId: "pay_GjCX3I1UZ23KeZ",
+                    PaymentType: 'paid',
+                    class: priceList && priceList.className,
+                    date: moment().format('YYYY-MM-DD – HH:mm A'),
+                    description: "ALAWWA - AMBEPUSSA",
+                    endStation: 'Ambepussa',
+                    name: currentUserEmail,
+                    price: parseInt(priceList && priceList.priceLKR),
+                    startStation: 'Alawwa'
+                })
+
+
         })
             .catch(error => console.log(error))
     }
 
+
     return (
+
         <div className="col-md-6 text-center">
             <div className="crd mb-4 shadow-sm ">
                 <div className="card-body  bg-warning">
@@ -49,8 +89,11 @@ const Price = (props) => {
 
                     </p>
 
+
+
                 </div>
             </div>
+
         </div>
 
 
