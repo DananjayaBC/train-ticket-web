@@ -36,19 +36,16 @@ const Price = (props) => {
             headers,
             body: JSON.stringify(body)
         }).then(response => {
-            console.log("RESPONSE ", response)
-            const { status } = response;
-            console.log("STATUS", status)
 
             firebase.firestore().collection("userData").doc(currentUserId).collection(moment().format('YYYY-MM-DD')).add({
-                PaymentId: "pay_GjCX3I1UZ23KeZ",
+                PaymentId: token.id,
                 PaymentType: 'paid',
                 class: priceList && priceList.className,
                 date: moment().format('YYYY-MM-DD – HH:mm A'),
-                description: "Alawwa - Ambepussa",
-                endStation: 'Ambepussa',
+                description: "ALAWWA - AMBEYPUSSA",
+                endStation: 'AMBEYPUSSA',
                 name: currentUserEmail,
-                price: parseInt(priceList && priceList.priceLKR),
+                price: `${parseInt(priceList && priceList.priceLKR)}.00`,
                 startStation: 'ALAWWA'
             })
 
@@ -56,16 +53,36 @@ const Price = (props) => {
                 .doc(moment().format('YYYY-MM-DD'))
                 .collection('tickets')
                 .add({
-                    PaymentId: "pay_GjCX3I1UZ23KeZ",
+                    PaymentId: token.id,
                     PaymentType: 'paid',
                     class: priceList && priceList.className,
                     date: moment().format('YYYY-MM-DD – HH:mm A'),
                     description: "ALAWWA - AMBEPUSSA",
-                    endStation: 'Ambepussa',
+                    endStation: 'AMBEYPUSSA',
                     name: currentUserEmail,
                     price: parseInt(priceList && priceList.priceLKR),
-                    startStation: 'Alawwa'
+                    startStation: 'ALAWWA'
                 })
+            firebase.firestore().collection("administration")
+                .doc(moment().format('YYYY-MM'))
+                .collection('tickets')
+                .add({
+                    PaymentId: token.id,
+                    PaymentType: 'paid',
+                    class: priceList && priceList.className,
+                    date: moment().format('YYYY-MM-DD – HH:mm A'),
+                    description: "ALAWWA - AMBEPUSSA",
+                    endStation: 'AMBEYPUSSA',
+                    name: currentUserEmail,
+                    price: parseInt(priceList && priceList.priceLKR),
+                    startStation: 'ALAWWA'
+                })
+
+
+            console.log("RESPONSE ", response)
+            const { status } = response;
+            console.log("STATUS", status)
+
 
 
         })

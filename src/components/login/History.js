@@ -18,15 +18,11 @@ function SnapshotFirebaseAdvanced() {
   function getPayments() {
     setLoading(true);
     ref
-      //.where('owner', '==', currentUserId)
-      //.where('title', '==', 'School1') // does not need index
-      //.where('score', '<=', 10)    // needs index
-      //.orderBy('owner', 'asc')
-      //.limit(3)
+
       .onSnapshot((querySnapshot) => {
         const items = [];
         querySnapshot.forEach((doc) => {
-          items.push(doc.data(currentUserId));
+          items.push(doc.data(currentUser.uid));
         });
         setPayments(items);
         setLoading(false);
@@ -53,9 +49,11 @@ function SnapshotFirebaseAdvanced() {
 
                   <strong><i className="fas fa-play"></i> {payment.date} </strong>
                   <br />
+                  <strong><i className="fas fa-time"></i>Payment ID - {payment.PaymentId}</strong>
+                  <br />
                   <strong><i className="fas fa-time"></i>Class - {payment.class} </strong>
                   <br />
-                  <strong><i className="fas fa-play"></i> Rs.{payment.price}.00 </strong>
+                  <strong><i className="fas fa-play"></i> Rs.{payment.price} </strong>
                 </p>
               </div>
             </div>

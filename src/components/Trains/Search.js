@@ -16,7 +16,7 @@ class Search extends Component {
         e.preventDefault();
 
         axios.get(`http://api.lankagate.gov.lk:8280/railway/1.0/train/searchTrain?startStationID=${this.state.selectValue1}&endStationID=${this.state.selectValue2}&startTime=00:00:00&endTime=23:59:00&lang=en&searchDate=${moment().format('yyyy-MM-DD')}`
-            , { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer 3831df83-dddf-343d-a689-4acf20a5fb1c' } })
+            , { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer 42d59105-7b78-35b7-962f-c224be1a3828' } })
             .then(res => {
                 dispatch({
                     type: 'SEARCH_TRAINS',
@@ -31,7 +31,7 @@ class Search extends Component {
             .catch(err => console.log(err));
 
         axios.get(`http://api.lankagate.gov.lk:8280/railway/1.0/ticket/getPrice?startStationID=${this.state.selectValue1}&endStationID=${this.state.selectValue2}&lang=en`
-            , { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer 3831df83-dddf-343d-a689-4acf20a5fb1c' } })
+            , { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer 42d59105-7b78-35b7-962f-c224be1a3828' } })
             .then(res => {
                 dispatch({
                     type: 'SEARCH_PRICES',
